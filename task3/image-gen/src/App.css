@@ -1,0 +1,75 @@
+/* App.css */
+
+.wrapper {
+  text-align: center;
+}
+
+.btn{
+  margin-left: 90%;
+  margin-top: 1rem;
+  width: 10%;
+  height: 5vh;
+  border-radius: 10px;
+}
+
+h1 {
+  padding: 2rem;
+  margin-top: 1rem;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.span{
+
+  color:red;
+}
+
+
+.display-img {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.img {
+  border: 1px solid gray;
+  width: calc(33.33% - 20px); 
+  margin-bottom: 20px; 
+}
+
+p {
+  text-align: center;
+  font-size: 50px;
+  margin-left: 30%;
+}
+
+
+.search-bar {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 30%;
+}
+
+
+input{
+  width: 50%;
+  height: 5vh;
+  border-radius: 3rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+input::placeholder{
+  text-align: center;
+  
+}
+
+.search-bar button{
+  width: 15%;
+  height: 5vh;
+  margin-top: 1rem;
+  margin-left: 20%;
+  border-radius: 10px;
+}

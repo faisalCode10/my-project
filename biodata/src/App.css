@@ -1,0 +1,58 @@
+
+.app-component{
+  display: flex;
+}
+
+.flex-item{
+  width: 100%;
+  display: flex;
+  gap: 30px;
+}
+
+.left-flex{
+  border: 1px solid red;
+  width: 40%;
+}
+.left-flex input{
+  width: 70%;
+  padding: 1rem;
+}
+.right-flex{
+  width: 100%;
+  border: 1px solid gray;
+
+}
+
+
+.btns{
+  border: 1px solid rgb(25, 63, 231);
+  color: white;
+  background-color: rgb(25, 63, 231);
+  width: 100%;
+  
+}
+
+
+li{
+  list-style: none;
+}
+
+img{
+  width: calc(120%);
+  height: 50px;
+  border-radius: 50%;
+}
+
+
+.main{
+  display: flex;
+  gap: 5%;
+  width: 100%;
+  border-bottom: 1px solid black;
+  /* background-color: blue; */
+}
+
+
+.p-info{
+  width: 100%;
+}
