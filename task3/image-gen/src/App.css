@@ -1,75 +1,129 @@
 /* App.css */
 
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+  background-color: white;
+  color: black;
+  margin: 0;
+  padding: 0;
+}
+
 .wrapper {
+  max-width: 800px;
+  height: 20%;
+  margin: 0 auto;
+  padding: 20px;
   text-align: center;
 }
 
-.btn{
-  margin-left: 90%;
-  margin-top: 1rem;
-  width: 10%;
-  height: 5vh;
-  border-radius: 10px;
+.btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn:hover {
+  background-color: #0056b3;
 }
 
 h1 {
-  padding: 2rem;
-  margin-top: 1rem;
-  font-size: 24px;
+  font-size: 28px;
   margin-bottom: 20px;
 }
 
-.span{
-
-  color:red;
+.span {
+  color: #007bff;
 }
-
-
-.display-img {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.img {
-  border: 1px solid gray;
-  width: calc(33.33% - 20px); 
-  margin-bottom: 20px; 
-}
-
-p {
-  text-align: center;
-  font-size: 50px;
-  margin-left: 30%;
-}
-
 
 .search-bar {
   margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  margin-left: 30%;
+}
+
+input[type="text"] {
+  width: 70%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.display-img {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.image-container {
+  border: 1px solid #ccc;
+  padding: 10px;
+  height: auto;
+  text-align: left;
+}
+
+.img {
+  max-width: 100%;
+  height: auto;
+}
+
+.image-details {
+  padding: 10px;
+}
+
+.image-details h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.image-details p {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+/* Dark mode */
+body.dark-mode {
+  background-color: black;
+  color: white;
 }
 
 
-input{
-  width: 50%;
-  height: 5vh;
-  border-radius: 3rem;
-  text-align: center;
-  padding: 1rem;
+@media (max-width:1000px) {
+    .display-img{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 30px;
+      width: 100%;
+    }
+    .img{
+        width: 100%;
+    }
+    p{
+      text-align: center;
+      width: 100%;
+      margin: auto;
+      font-size: 3rem;
+    }
+    input{
+      width: 70%;
+    }
+   
 }
 
-input::placeholder{
-  text-align: center;
-  
-}
 
-.search-bar button{
-  width: 15%;
-  height: 5vh;
-  margin-top: 1rem;
-  margin-left: 20%;
-  border-radius: 10px;
-}

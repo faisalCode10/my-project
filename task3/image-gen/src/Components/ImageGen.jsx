@@ -6,7 +6,7 @@ const ImageGen = () => {
   const [images, setImages] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [isActive, setIsActive] = useState(false); // Use lowercase for variable name
+  const [isActive, setIsActive] = useState(false);
   const accessKey = '5HZq1ywJGL3B1JJXKV5gvYv8mEEQj8ZbDdQJqk2cumI';
 
   const fetchImages = async () => {
@@ -29,12 +29,11 @@ const ImageGen = () => {
     fetchImages();
   };
 
-  const nextPage = () => {
+  const showMore = () => {
     setPage(page + 1);
   };
 
   const toggleColors = () => {
-    // Toggle the isActive state
     setIsActive(!isActive);
   };
 
@@ -54,7 +53,9 @@ const ImageGen = () => {
 
   return (
     <div className='wrapper'>
-      <button className='btn' onClick={toggleColors}>{isActive ? 'Light' : 'Dark'}</button>
+      <button className='btn' onClick={toggleColors}>
+        {isActive ? 'Light' : 'Dark'}
+      </button>
 
       <h1>Unsplash <span className='span'>Images</span></h1>
 
@@ -74,22 +75,26 @@ const ImageGen = () => {
           <p>Fetching images...</p>
         ) : images && images.length > 0 ? (
           images.map((image) => (
-            <img
-              key={image.id}
-              src={image.urls.regular}
-              alt={image.alt_description}
-              className='img'
-            />
+            <div key={image.id} className="image-container">
+              <img
+                src={image.urls.small}
+                alt={image.description || image.alt_description}
+                className='img'
+              />
+              <div className="image-details">
+                <h2> {image.alt_description || 'No title available'}</h2>
+                <p>{image.description || 'No description available'}</p>
+                <p>Click Date: {image.created_at || 'N/A'}</p>
+              </div>
+            </div>
           ))
         ) : (
           <p>No images to display.</p>
         )}
       </div>
-      {images.length > 0 ? (
-        <button onClick={nextPage}>Next page</button>
-      ) : (
-        ''
-      )}
+      {
+        images.length>0   ?<button onClick={showMore}>Show more</button> : ""
+      }
     </div>
   );
 };
