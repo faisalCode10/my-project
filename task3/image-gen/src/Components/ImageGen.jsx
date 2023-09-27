@@ -16,9 +16,10 @@ const ImageGen = () => {
       const response = await fetch(url);
       const data = await response.json();
       console.log(data);
-      setImages(data.results);
+      setImages((prevImages) => [...prevImages, ...data.results]);
+      setPage(page + 1);
     } catch (error) {
-      console.error('Error fetching images:', error);
+      console.log('Error fetching images:', error);
     } finally {
       setIsLoading(false);
     }
@@ -26,11 +27,8 @@ const ImageGen = () => {
 
   const handleSearch = () => {
     setPage(1);
+    setImages([]);
     fetchImages();
-  };
-
-  const showMore = () => {
-    setPage(page + 1);
   };
 
   const toggleColors = () => {
@@ -39,7 +37,7 @@ const ImageGen = () => {
 
   useEffect(() => {
     fetchImages();
-  }, [page]);
+  }, []);
 
   useEffect(() => {
     if (isActive) {
@@ -50,6 +48,29 @@ const ImageGen = () => {
       document.body.style.color = 'black';
     }
   }, [isActive]);
+  
+  // Infinite scroll logic 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          fetchImages();
+        }
+      },
+      { rootMargin: '0px 0px 200px 0px' }
+    );
+
+    if (isLoading) return;
+
+    if (images.length > 0) {
+      observer.observe(document.querySelector('.image-container:last-child'));
+    }
+
+    // Return when unmount => khatam 
+    return () => {
+      observer.disconnect();
+    };
+  }, [isLoading]);
 
   return (
     <div className='wrapper'>
@@ -57,31 +78,31 @@ const ImageGen = () => {
         {isActive ? 'Light' : 'Dark'}
       </button>
 
-      <h1>Unsplash <span className='span'>Images</span></h1>
+      <h1>
+        Unsplash <span className='span'>Images</span>
+      </h1>
 
-      <div className="search-bar">
+      <div className='search-bar'>
         <input
-          type="text"
-          name="text"
+          type='text'
+          name='text'
           value={inputData}
           onChange={(e) => setInputData(e.target.value)}
-          placeholder="Search for images..."
+          placeholder='Search for images...'
         />
         <button onClick={handleSearch}>Search</button>
       </div>
 
-      <div className="display-img">
-        {isLoading ? (
-          <p>Fetching images...</p>
-        ) : images && images.length > 0 ? (
+      <div className='display-img'>
+        {images && images.length > 0 ? (
           images.map((image) => (
-            <div key={image.id} className="image-container">
+            <div key={image.id} className='image-container'>
               <img
                 src={image.urls.small}
                 alt={image.description || image.alt_description}
                 className='img'
               />
-              <div className="image-details">
+              <div className='image-details'>
                 <h2> {image.alt_description || 'No title available'}</h2>
                 <p>{image.description || 'No description available'}</p>
                 <p>Click Date: {image.created_at || 'N/A'}</p>
@@ -91,10 +112,8 @@ const ImageGen = () => {
         ) : (
           <p>No images to display.</p>
         )}
+        {isLoading && <p>Loading more images...</p>}
       </div>
-      {
-        images.length>0   ?<button onClick={showMore}>Show more</button> : ""
-      }
     </div>
   );
 };
