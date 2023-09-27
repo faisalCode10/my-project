@@ -34,7 +34,7 @@ const ImageGen = () => {
   const toggleColors = () => {
     setIsActive(!isActive);
   };
-
+      
   useEffect(() => {
     fetchImages();
   }, []);
@@ -48,7 +48,7 @@ const ImageGen = () => {
       document.body.style.color = 'black';
     }
   }, [isActive]);
-  
+
   // Infinite scroll logic 
   useEffect(() => {
     const observer = new IntersectionObserver(
