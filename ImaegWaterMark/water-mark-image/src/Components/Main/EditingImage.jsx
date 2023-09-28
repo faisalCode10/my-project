@@ -1,23 +1,37 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import './EditingImage.css'
+import RightNav from './RightNav';
 
 const EditingImage = () => {
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const encodedImage = queryParams.get('image');
+  const encodedImage = localStorage.getItem('selectedImage');
+  
+  
+  useEffect(() => {
+      return () => {
+          localStorage.removeItem('selectedImage');
+        };
+    }, []);
 
-  // Decode the image data and create an img element
-  const selectedImageElement = encodedImage ? (
-    <img src={encodedImage} alt="Selected" />
-  ) : null;
+  
+if (!encodedImage) {
+  window.location.replace('http://localhost:5173')
+    }
 
   return (
-    <div>
-      <h2>Editing Image</h2>
-      {selectedImageElement}
-      {/* Additional editing components go here */}
+    <div className="main">
+      <div className='left'>
+        <img src={encodedImage} alt="Selected" className='edit-img' />
+      <div className="para">
+        <p>Watermark will be applied to this images</p>
+      </div>
+      <div className="small-img">
+        <img src={encodedImage} alt="" />
+      </div>
+      </div>
+      
+      <RightNav />
     </div>
-  );
+  );    
 };
 
 export default EditingImage;

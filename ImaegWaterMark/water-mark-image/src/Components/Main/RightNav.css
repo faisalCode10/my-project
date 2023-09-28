@@ -1,0 +1,21 @@
+.right-nav{
+    position: sticky;
+    overflow: hidden;
+    padding: 2rem;
+    background-color: red;
+    width: 100%;
+    height: 96vh;
+}
+.right-nav h1{
+    border-bottom: 1px solid black;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .buttons button {
+    margin-left: 10px; 
+  }
+  

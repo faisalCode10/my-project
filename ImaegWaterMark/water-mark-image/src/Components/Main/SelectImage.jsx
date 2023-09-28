@@ -1,5 +1,6 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../Footer/Footer';
 import './SelectImage.css';
 
 const SelectImage = () => {
@@ -16,11 +17,17 @@ const SelectImage = () => {
     const selectedFile = e.target.files[0];
     // Encode the selected image data as a Base64 string
     const encodedImage = URL.createObjectURL(selectedFile);
-    // Pass the encoded image as a URL parameter
-    navigate(`/editing?image=${encodeURIComponent(encodedImage)}`);
+
+    // Store the encoded image data in localStorage
+    localStorage.setItem('selectedImage', encodedImage);
+
+    // Navigate to the editing route
+    navigate('/editing');
   };
 
   return (
+    <>
+
     <div className='wrapper'>
       <div className="container">
         <h1>Watermark IMAGE</h1>
@@ -39,6 +46,8 @@ const SelectImage = () => {
         <span>or drop images here</span>
       </div>
     </div>
+    <Footer />
+    </>
   );
 };
 
