@@ -11,9 +11,6 @@ const EditingImage = () => {
   const encodedImage = localStorage.getItem('selectedImage');
   const [watermarkHTML, setWatermarkHTML] = useState('');
   const [isAddingText, setIsAddingText] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
 
   const addText = () => {
     if (!encodedImage) {
@@ -22,33 +19,6 @@ const EditingImage = () => {
       setIsAddingText(true);
     }
   };
-
-
-  useEffect(() => {
-    if (isDragging) {
-      const handleMouseMove = (e) => {
-        setPosition({
-          x: e.clientX - offset.x,
-          y: e.clientY - offset.y,
-        });
-      };
-
-      const handleMouseUp = () => {
-        setIsDragging(false);
-      };
-
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-
-      return () => {
-        document.removeEventListener('mousemove', handleMouseMove);
-        document.removeEventListener('mouseup', handleMouseUp);
-      };
-    }
-  }, [isDragging, offset]);
-
-
-
 
 
   const handleSaveText = () => {
@@ -113,15 +83,11 @@ const EditingImage = () => {
                 direction: 'ltr',
                 resize: 'both',
                 overflow: 'auto',
-                cursor: 'grab'
+                cursor: 'grab',
               }}
               className='ql-editor'
               dangerouslySetInnerHTML={{ __html: watermarkHTML }}
               onInput={(event) => setWatermarkHTML(event.target.innerHTML)}
-              onMouseDown={(e) => {
-                setIsDragging(true);
-                setOffset({ x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY });
-              }}
             ></div>
             <div className="img">
               <img src={encodedImage} alt="" />
@@ -160,3 +126,4 @@ const EditingImage = () => {
 };
 
 export default EditingImage;
+ 

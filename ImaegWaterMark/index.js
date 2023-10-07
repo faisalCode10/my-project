@@ -9,8 +9,11 @@
 
 // const EditingImage = () => {
 //   const encodedImage = localStorage.getItem('selectedImage');
-//   const [watermarkText, setWatermarkText] = useState('');
+//   const [watermarkHTML, setWatermarkHTML] = useState('');
 //   const [isAddingText, setIsAddingText] = useState(false);
+//   const [isDragging, setIsDragging] = useState(false);
+//   const [position, setPosition] = useState({ x: 0, y: 0 });
+//   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
 //   const addText = () => {
 //     if (!encodedImage) {
@@ -19,6 +22,34 @@
 //       setIsAddingText(true);
 //     }
 //   };
+
+
+//   useEffect(() => {
+//     if (isDragging) {
+//       const handleMouseMove = (e) => {
+//         setPosition({
+//           x: e.clientX - offset.x,
+//           y: e.clientY - offset.y,
+//         });
+//       };
+
+//       const handleMouseUp = () => {
+//         setIsDragging(false);
+//       };
+
+//       document.addEventListener('mousemove', handleMouseMove);
+//       document.addEventListener('mouseup', handleMouseUp);
+
+//       return () => {
+//         document.removeEventListener('mousemove', handleMouseMove);
+//         document.removeEventListener('mouseup', handleMouseUp);
+//       };
+//     }
+//   }, [isDragging, offset]);
+
+
+
+
 
 //   const handleSaveText = () => {
 //     setIsAddingText(false);
@@ -36,6 +67,17 @@
 //     });
 //   };
 
+//   // Function to handle changes in the React Quill editor
+//   const handleEditorChange = (htmlContent) => {
+//     setWatermarkHTML(htmlContent);
+//   };
+
+//   // Function to convert HTML to plain text (strip HTML tags)
+//   // const htmlToPlainText = (html) => {
+//   //   const text = parse(html);
+//   //   return text;
+//   // };
+
 //   useEffect(() => {
 //     if (window.location.reload === true) {
 //       window.location.replace('/');
@@ -48,25 +90,41 @@
 //         <div className="quill-container">
 //           {isAddingText && (
 //             <ReactQuill
-//               value={watermarkText}
-//               onChange={setWatermarkText}
+//               value={watermarkHTML}
+//               onChange={handleEditorChange}
 //               className='ReactQuill'
 //             />
 //           )}
 //           <div className="image-container">
-//             <textarea
-//               name=""
-//               id=""
+//             <div
+//               contentEditable
 //               cols="30"
 //               rows="10"
 //               placeholder='Enter Text Here'
 //               style={{
-//                 display: isAddingText ? 'block' : 'none'
+//                 display: isAddingText ? 'block' : 'none',
+//                 border: '1px solid white',
+//                 padding: '4px',
+//                 height: '10%',
+//                 position: 'absolute',
+//                 top: '10%',
+//                 width: '50%',
+//                 color: 'white',
+//                 direction: 'ltr',
+//                 resize: 'both',
+//                 overflow: 'auto',
+//                 cursor: 'grab'
 //               }}
-//             ></textarea>
-
+//               className='ql-editor'
+//               dangerouslySetInnerHTML={{ __html: watermarkHTML }}
+//               onInput={(event) => setWatermarkHTML(event.target.innerHTML)}
+//               onMouseDown={(e) => {
+//                 setIsDragging(true);
+//                 setOffset({ x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY });
+//               }}
+//             ></div>
 //             <div className="img">
-//               <img src={encodedImage} alt="Selected" className='edit-img' />
+//               <img src={encodedImage} alt="" />
 //             </div>
 //           </div>
 //         </div>
@@ -102,9 +160,7 @@
 // };
 
 // export default EditingImage;
-
-
-
+ 
 
 
 
