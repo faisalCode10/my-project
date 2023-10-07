@@ -1,9 +1,9 @@
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../Footer/Footer';
-import './SelectImage.css';
+import './Home.css';
 
-const SelectImage = () => {
+const Home = () => {
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
@@ -43,7 +43,7 @@ const SelectImage = () => {
           ref={fileInputRef}
           onChange={handleFileSelect}
         />
-        <span>or drop images here</span>
+        <span className='spn'>or drop images here</span>
       </div>
     </div>
     <Footer />
@@ -51,4 +51,4 @@ const SelectImage = () => {
   );
 };
 
-export default SelectImage;
+export default Home;

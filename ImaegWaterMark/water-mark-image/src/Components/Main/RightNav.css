@@ -52,32 +52,53 @@ button {
 }
 
 .icon {
-  font-size: 20px;
   height: 100%;
   width: 30%;
   color: white;
-  background:  #4d90fe;
+  background: #4d90fe;
   border-top-left-radius: 1rem;
   border-bottom-left-radius: 1rem;
 }
 
-.save-btn{
+.save-btn {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 90%;
 }
 
-.btn{
+.btn-active {
   width: 100%;
   height: 50px;
   border-radius: 1rem;
   background-color: transparent;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
-  background:  #4d90fe;
+  background: #4d90fe;
   color: #fff;
 }
 
-.btn p{
+.btn-active p {
   font-size: 25px;
+}
+
+
+.btn-active::before {
+  content: "add an Element";
+  display: none;
+  /* Initially hide the content */
+  position: absolute;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  background-color: black;
+  color: white;
+  width: 20%;
+  right: 4%;
+  font-size: 23px;
+  margin-top: -50px;
+  margin-left: 10px;
+  z-index: 1;
+}
+
+.btn-active:hover::before {
+  display: block;
 }

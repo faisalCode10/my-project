@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './Components/Navbar/Navbar'
-import SelectImage from './Components/Main/SelectImage';
+import Home from './Components/Main/Home';
 import EditingImage from './Components/Main/EditingImage';
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
     <Router>
     <Navbar />
     <Routes>
-        <Route path="/" element={<SelectImage />} />
+        <Route path="/" element={<Home />} />
         <Route path="/editing" element={<EditingImage />} />
       </Routes>
       
