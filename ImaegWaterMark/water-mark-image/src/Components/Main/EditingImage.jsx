@@ -4,6 +4,7 @@ import { AiOutlinePicture } from 'react-icons/ai';
 import ReactQuill from 'react-quill';
 import html2canvas from 'html2canvas';
 import Draggable from 'react-draggable';
+import { Resizable } from 'react-resizable'; // Import the Resizable component
 import 'react-quill/dist/quill.snow.css';
 import './EditingImage.css';
 import './RightNav.css';
@@ -12,7 +13,9 @@ const EditingImage = () => {
   const encodedImage = localStorage.getItem('selectedImage');
   const [watermarkHTML, setWatermarkHTML] = useState('');
   const [isAddingText, setIsAddingText] = useState(false);
+  const [uploadedImage, setUploadedImage] = useState(null); // State to store the uploaded image
   const containerRef = useRef(null);
+  const imageRef = useRef(null); // Reference for the resizable image
 
   const addText = () => {
     if (!encodedImage) {
@@ -54,8 +57,8 @@ const EditingImage = () => {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        // You can set the uploaded image to your state or process it here
-        console.log('Uploaded Image:', e.target.result);
+        // Set the uploaded image to state
+        setUploadedImage(e.target.result);
       };
       reader.readAsDataURL(file);
     }
@@ -63,20 +66,20 @@ const EditingImage = () => {
 
   return (
     <div className="main">
-      <div className='left'>
+      <div className="left">
         <div className="quill-container">
           {isAddingText && (
             <ReactQuill
               value={watermarkHTML}
               onChange={handleEditorChange}
-              className='ReactQuill'
+              className="ReactQuill"
             />
           )}
           <div className="image-container" ref={containerRef}>
             <Draggable>
               <div
                 contentEditable={isAddingText}
-                placeholder='Enter Text Here'
+                placeholder="Enter Text Here"
                 style={{
                   display: isAddingText ? 'block' : 'none',
                   border: '1px solid white',
@@ -91,22 +94,58 @@ const EditingImage = () => {
                   overflow: 'auto',
                   cursor: 'grab',
                 }}
-                className='ql-editor'
+                className="ql-editor"
                 dangerouslySetInnerHTML={{ __html: watermarkHTML }}
                 onInput={(event) => setWatermarkHTML(event.target.innerHTML)}
               ></div>
             </Draggable>
-            <div className="img">
-              <img src={encodedImage} alt="" />
-            </div>
+            <Resizable
+              width={200} // Initial width
+              height={200} // Initial height
+              onResize={(e, { size }) => {
+                // Handle resize here
+                imageRef.current.style.width = `${size.width}px`;
+                imageRef.current.style.height = `${size.height}px`;
+              }}
+            >
+              <div className="img" ref={imageRef}>
+                <img
+                  src={encodedImage}
+                  alt=""
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                  }}
+                />
+              </div>
+            </Resizable>
+            {uploadedImage && (
+              <div className="upload-img">
+                <Resizable
+                  width={200} 
+                  height={200} 
+                  onResize={(e, { size }) => {
+                    // Handle resize here
+                    imageRef.current.style.width = `${size.width}px`;
+                    imageRef.current.style.height = `${size.height}px`;
+                  }}
+                >
+                  <div ref={imageRef}>
+                    <img src={uploadedImage} alt="Uploaded" />
+                  </div>
+                </Resizable>
+              </div>
+            )}
           </div>
         </div>
         <div className="para">
           <p>Watermark will be applied to this image</p>
         </div>
-        <div className="small-img">
-          <img src={encodedImage} alt="" />
-        </div>
+        <Draggable>
+          <div className="small-img">
+            <img src={encodedImage} alt="" />
+          </div>
+        </Draggable>
       </div>
 
       <div className="right">
@@ -114,28 +153,28 @@ const EditingImage = () => {
           <h1>Watermark Images</h1>
           <div className="buttons">
             <div className="btn-first">
-              <BiText className='icon' />
+              <BiText className="icon" />
               <button onClick={addText}>Add Text</button>
             </div>
             <div className="btn-second">
-            <button>
-              <label htmlFor="imageInput" className="icon-label">
-                <AiOutlinePicture className="icon" />
-                Add Image
-              </label>
-              <input
-                type="file"
-                id="imageInput"
-                accept="image/*"
-                onChange={handleImageUpload}
-                style={{ display: 'none' }} 
-              />
-            </button>
+              <button>
+                <label htmlFor="imageInput" className="icon-label">
+                  <AiOutlinePicture className="icon" />
+                  Add Image
+                </label>
+                <input
+                  type="file"
+                  id="imageInput"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  style={{ display: 'none' }}
+                />
+              </button>
             </div>
           </div>
           <div className="save-btn">
-            <button className='btn-active' onClick={handleSaveText}>
-              <p>Watermark Image</p>
+            <button className="btn-active" onClick={handleSaveText}>
+              <p> Download Watermark Image</p>
             </button>
           </div>
         </div>

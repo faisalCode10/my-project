@@ -72,3 +72,14 @@ textarea::placeholder {
     border: none;
     color: white;
 }
+
+.upload-img{
+    width: 50%;
+    height: auto;
+    position: relative;
+}
+
+.upload-img img{
+    position: absolute;
+    bottom: 100%;
+}
