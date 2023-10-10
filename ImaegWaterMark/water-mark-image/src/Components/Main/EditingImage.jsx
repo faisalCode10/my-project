@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { BiText } from 'react-icons/bi';
 import { AiOutlinePicture } from 'react-icons/ai';
 import ReactQuill from 'react-quill';
 import html2canvas from 'html2canvas';
+import Draggable from 'react-draggable';
 import 'react-quill/dist/quill.snow.css';
 import './EditingImage.css';
 import './RightNav.css';
@@ -11,6 +12,7 @@ const EditingImage = () => {
   const encodedImage = localStorage.getItem('selectedImage');
   const [watermarkHTML, setWatermarkHTML] = useState('');
   const [isAddingText, setIsAddingText] = useState(false);
+  const containerRef = useRef(null);
 
   const addText = () => {
     if (!encodedImage) {
@@ -20,21 +22,26 @@ const EditingImage = () => {
     }
   };
 
-
-  const handleSaveText = () => {
+  const handleSaveText = async () => {
     setIsAddingText(false);
 
-    const imageContainer = document.querySelector('.image-container');
+    // Force a redraw of the React Quill component
+    setWatermarkHTML(watermarkHTML);
 
-    html2canvas(imageContainer).then((canvas) => {
-      // Convert the canvas to a data URL
-      const watermarkedImageUrl = canvas.toDataURL('image/png');
+    if (containerRef.current) {
+      try {
+        const canvas = await html2canvas(containerRef.current);
 
-      const a = document.createElement('a');
-      a.href = watermarkedImageUrl;
-      a.download = 'watermarked_image.png';
-      a.click();
-    });
+        const watermarkedImageUrl = canvas.toDataURL('image/png');
+
+        const a = document.createElement('a');
+        a.href = watermarkedImageUrl;
+        a.download = 'watermarked_image.png';
+        a.click();
+      } catch (error) {
+        console.error('Error capturing image:', error);
+      }
+    }
   };
 
   // Function to handle changes in the React Quill editor
@@ -42,17 +49,17 @@ const EditingImage = () => {
     setWatermarkHTML(htmlContent);
   };
 
-  // Function to convert HTML to plain text (strip HTML tags)
-  // const htmlToPlainText = (html) => {
-  //   const text = parse(html);
-  //   return text;
-  // };
-
-  useEffect(() => {
-    if (window.location.reload === true) {
-      window.location.replace('/');
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        // You can set the uploaded image to your state or process it here
+        console.log('Uploaded Image:', e.target.result);
+      };
+      reader.readAsDataURL(file);
     }
-  }, [encodedImage]);
+  };
 
   return (
     <div className="main">
@@ -65,30 +72,30 @@ const EditingImage = () => {
               className='ReactQuill'
             />
           )}
-          <div className="image-container">
-            <div
-              contentEditable
-              cols="30"
-              rows="10"
-              placeholder='Enter Text Here'
-              style={{
-                display: isAddingText ? 'block' : 'none',
-                border: 'none',
-                padding: '4px',
-                height: '10%',
-                position: 'absolute',
-                top: '10%',
-                width: '50%',
-                color: 'white',
-                direction: 'ltr',
-                resize: 'both',
-                overflow: 'auto',
-                cursor: 'grab',
-              }}
-              className='ql-editor'
-              dangerouslySetInnerHTML={{ __html: watermarkHTML }}
-              onInput={(event) => setWatermarkHTML(event.target.innerHTML)}
-            ></div>
+          <div className="image-container" ref={containerRef}>
+            <Draggable>
+              <div
+                contentEditable={isAddingText}
+                placeholder='Enter Text Here'
+                style={{
+                  display: isAddingText ? 'block' : 'none',
+                  border: '1px solid white',
+                  padding: '4px',
+                  height: '10%',
+                  position: 'absolute',
+                  top: '10%',
+                  width: '50%',
+                  color: 'white',
+                  direction: 'ltr',
+                  resize: 'both',
+                  overflow: 'auto',
+                  cursor: 'grab',
+                }}
+                className='ql-editor'
+                dangerouslySetInnerHTML={{ __html: watermarkHTML }}
+                onInput={(event) => setWatermarkHTML(event.target.innerHTML)}
+              ></div>
+            </Draggable>
             <div className="img">
               <img src={encodedImage} alt="" />
             </div>
@@ -111,13 +118,25 @@ const EditingImage = () => {
               <button onClick={addText}>Add Text</button>
             </div>
             <div className="btn-second">
-              <AiOutlinePicture className='icon' />
-              <button>Add Image</button>
+            <button>
+              <label htmlFor="imageInput" className="icon-label">
+                <AiOutlinePicture className="icon" />
+                Add Image
+              </label>
+              <input
+                type="file"
+                id="imageInput"
+                accept="image/*"
+                onChange={handleImageUpload}
+                style={{ display: 'none' }} 
+              />
+            </button>
             </div>
           </div>
-
           <div className="save-btn">
-            <button className='btn-active' onClick={handleSaveText}><p>Watermark Image</p></button>
+            <button className='btn-active' onClick={handleSaveText}>
+              <p>Watermark Image</p>
+            </button>
           </div>
         </div>
       </div>
@@ -126,4 +145,3 @@ const EditingImage = () => {
 };
 
 export default EditingImage;
- 

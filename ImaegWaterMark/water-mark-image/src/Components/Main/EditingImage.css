@@ -49,7 +49,7 @@
     display: none;
 } */
 
-.image-container {
+.image-container { 
     position: relative;
 }
 
@@ -59,7 +59,7 @@
     top: 20%;
     background: transparent;
     border: 1px solid white;
-    direction: inherit; /* Inherit the direction from the parent */
+    direction: inherit;
 }
 
 
