@@ -78,20 +78,18 @@ const EditingImage = () => {
           <div className="image-container" ref={containerRef}>
             <Draggable>
               <div
-                contentEditable={isAddingText}
+                // contentEditable={isAddingText}
                 placeholder="Enter Text Here"
                 style={{
                   display: isAddingText ? 'block' : 'none',
-                  border: '1px solid white',
                   padding: '4px',
-                  height: '10%',
+                  height: 'auto',
                   position: 'absolute',
                   top: '10%',
                   width: '50%',
                   color: 'white',
                   direction: 'ltr',
                   resize: 'both',
-                  overflow: 'auto',
                   cursor: 'grab',
                 }}
                 className="ql-editor"
@@ -100,8 +98,8 @@ const EditingImage = () => {
               ></div>
             </Draggable>
             <Resizable
-              width={200} // Initial width
-              height={200} // Initial height
+              width={100} // Set an appropriate initial width
+              height={100} // Set an appropriate initial height
               onResize={(e, { size }) => {
                 // Handle resize here
                 imageRef.current.style.width = `${size.width}px`;
@@ -112,18 +110,16 @@ const EditingImage = () => {
                 <img
                   src={encodedImage}
                   alt=""
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                  }}
+                  
                 />
               </div>
             </Resizable>
             {uploadedImage && (
               <div className="upload-img">
+                    
                 <Resizable
-                  width={200} 
-                  height={200} 
+                  width={100}
+                  height={100}
                   onResize={(e, { size }) => {
                     // Handle resize here
                     imageRef.current.style.width = `${size.width}px`;
@@ -131,7 +127,11 @@ const EditingImage = () => {
                   }}
                 >
                   <div ref={imageRef}>
-                    <img src={uploadedImage} alt="Uploaded" />
+                    <img src={uploadedImage} alt="Uploaded" style={
+                      {
+                        cursor:'grab'
+                      }
+                    } />
                   </div>
                 </Resizable>
               </div>

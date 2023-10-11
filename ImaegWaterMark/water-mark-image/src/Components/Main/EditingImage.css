@@ -45,9 +45,9 @@
     position: relative;
 }
 
-/* .ql-editor{
-    display: none;
-} */
+.ql-editor{
+    height: 10%;
+}
 
 .image-container { 
     position: relative;
