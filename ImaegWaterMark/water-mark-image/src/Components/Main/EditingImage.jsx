@@ -4,10 +4,10 @@ import { AiOutlinePicture } from 'react-icons/ai';
 import ReactQuill from 'react-quill';
 import html2canvas from 'html2canvas';
 import Draggable from 'react-draggable';
-import { Resizable } from 'react-resizable'; // Import the Resizable component
 import 'react-quill/dist/quill.snow.css';
 import './EditingImage.css';
 import './RightNav.css';
+import UploadImage from './UploadImage';
 
 const EditingImage = () => {
   const encodedImage = localStorage.getItem('selectedImage');
@@ -15,7 +15,6 @@ const EditingImage = () => {
   const [isAddingText, setIsAddingText] = useState(false);
   const [uploadedImage, setUploadedImage] = useState(null); // State to store the uploaded image
   const containerRef = useRef(null);
-  const imageRef = useRef(null); // Reference for the resizable image
 
   const addText = () => {
     if (!encodedImage) {
@@ -83,7 +82,7 @@ const EditingImage = () => {
                 style={{
                   display: isAddingText ? 'block' : 'none',
                   padding: '4px',
-                  height: 'auto',
+                  height: '100%',
                   position: 'absolute',
                   top: '10%',
                   width: '50%',
@@ -97,45 +96,15 @@ const EditingImage = () => {
                 onInput={(event) => setWatermarkHTML(event.target.innerHTML)}
               ></div>
             </Draggable>
-            <Resizable
-              width={100} // Set an appropriate initial width
-              height={100} // Set an appropriate initial height
-              onResize={(e, { size }) => {
-                // Handle resize here
-                imageRef.current.style.width = `${size.width}px`;
-                imageRef.current.style.height = `${size.height}px`;
-              }}
-            >
-              <div className="img" ref={imageRef}>
-                <img
-                  src={encodedImage}
-                  alt=""
-                  
-                />
-              </div>
-            </Resizable>
-            {uploadedImage && (
-              <div className="upload-img">
-                    
-                <Resizable
-                  width={100}
-                  height={100}
-                  onResize={(e, { size }) => {
-                    // Handle resize here
-                    imageRef.current.style.width = `${size.width}px`;
-                    imageRef.current.style.height = `${size.height}px`;
-                  }}
-                >
-                  <div ref={imageRef}>
-                    <img src={uploadedImage} alt="Uploaded" style={
-                      {
-                        cursor:'grab'
-                      }
-                    } />
-                  </div>
-                </Resizable>
-              </div>
-            )}
+
+            <div className="imgs" >
+              <img
+                src={encodedImage}
+                alt=""
+
+              />
+            <UploadImage uploadedImage={uploadedImage} />
+            </div>
           </div>
         </div>
         <div className="para">
