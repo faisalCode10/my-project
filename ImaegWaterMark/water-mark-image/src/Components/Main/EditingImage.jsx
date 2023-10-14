@@ -8,6 +8,7 @@ import 'react-quill/dist/quill.snow.css';
 import './EditingImage.css';
 import './RightNav.css';
 import UploadImage from './UploadImage';
+import AddText from './AddText';
 
 const EditingImage = () => {
   const encodedImage = localStorage.getItem('selectedImage');
@@ -75,36 +76,17 @@ const EditingImage = () => {
             />
           )}
           <div className="image-container" ref={containerRef}>
-            <Draggable>
-              <div
-                // contentEditable={isAddingText}
-                placeholder="Enter Text Here"
-                style={{
-                  display: isAddingText ? 'block' : 'none',
-                  padding: '4px',
-                  height: '100%',
-                  position: 'absolute',
-                  top: '10%',
-                  width: '50%',
-                  color: 'white',
-                  direction: 'ltr',
-                  resize: 'both',
-                  cursor: 'grab',
-                }}
-                className="ql-editor"
-                dangerouslySetInnerHTML={{ __html: watermarkHTML }}
-                onInput={(event) => setWatermarkHTML(event.target.innerHTML)}
-              ></div>
-            </Draggable>
-
-            <div className="imgs" >
-              <img
-                src={encodedImage}
-                alt=""
-
-              />
-            <UploadImage uploadedImage={uploadedImage} />
-            </div>
+           
+              <AddText isAddingText={isAddingText} setWatermarkHTML={setWatermarkHTML} watermarkHTML ={watermarkHTML} />
+           
+           
+              <div className="img">
+                <img
+                  src={encodedImage}
+                  alt=""
+                />
+              </div>
+          <UploadImage  uploadedImage={uploadedImage}/>
           </div>
         </div>
         <div className="para">
