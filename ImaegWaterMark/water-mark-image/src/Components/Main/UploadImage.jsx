@@ -30,7 +30,7 @@ const UploadImage = ({ uploadedImage }) => {
     <div className='uploadImg-container'>
       {uploadedImage && (
         <div className="upload-img">
-          <canvas ref={canvasRef} width={800} height={1200} />
+          <canvas ref={canvasRef} width={820} height={1200} />
         </div>
       )}
     </div>

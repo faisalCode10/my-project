@@ -66,14 +66,17 @@ const EditingImage = () => {
     }
   };
 
-
+const reload = ()=>{
   useEffect(() => {
     if (window.location.reload == true) {
-      window.location.href = '/'
+      alert("Reload to ", window.location.href = '/')
+      
       console.log(error)
     }
   }, [window])
+}
 
+reload()
   return (
     <div className="main">
       <div className="left">
