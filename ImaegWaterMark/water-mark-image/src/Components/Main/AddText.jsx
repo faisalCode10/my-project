@@ -1,30 +1,48 @@
-import React from 'react'
+import React, { useState } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import './AddText.css';
+import Draggable from 'react-draggable'; // Import react-draggable
 
-const AddText = ({isAddingText,setWatermarkHTML, watermarkHTML}) => {
+const AddText = ({ isAddingText, setWatermarkHTML, watermarkHTML }) => {
+  const [quillHTML, setQuillHTML] = useState(watermarkHTML);
+
+  const handleQuillChange = (value) => {
+    setQuillHTML(value);
+    setWatermarkHTML(value);
+  };
+
   return (
     <div>
-        <div
-                // contentEditable={isAddingText}
-                placeholder="Enter Text Here"
-                style={{
-                  display: isAddingText ? 'block' : 'none',
-                  padding: '4px',
-                  position: 'absolute',
-                  top: '10%',
-                  width: '50%',
-                  height:'100%',
-                  direction: 'ltr',
-                  resize: 'both',
-                  cursor: 'grab',
-                  zIndex:'1',
-                  color:'white',
-                }}
-                className="ql-editor"
-                dangerouslySetInnerHTML={{ __html: watermarkHTML }}
-                onInput={(event) => setWatermarkHTML(event.target.innerHTML)}
-              ></div>
+      {isAddingText ? (
+          <div>
+            <ReactQuill
+              value={quillHTML}
+              onChange={handleQuillChange}
+              style={{
+                position: 'relative',
+              }}
+            className="ql-editor"
+              
+            />
     </div>
-  )
-}
+      ) : null}
+        <Draggable>
+            <div
+              style={{
+                position: 'absolute',
+                color:'white',
+                width: '50%',
+                direction: 'ltr',
+                resize: 'both',
+                cursor: 'grab',
+                zIndex: '1',
+              }}
+              dangerouslySetInnerHTML={{ __html: quillHTML }}
+            ></div>
+        </Draggable>
+          </div>
+  );
+};
 
-export default AddText
+export default AddText;

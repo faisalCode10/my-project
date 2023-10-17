@@ -70,7 +70,6 @@
         justify-content: space-between;
         align-items: center;
         width: 100%;
-        background-color: red;
     }
 
     .nav-left { 
@@ -95,7 +94,6 @@
         justify-content: flex-start;
         align-items: center;
         width: 100%;
-        background-color: red;
     }
     .nav-left { 
         gap: 10px;
@@ -111,5 +109,22 @@
 
     .blue-btn-bg {
         width: auto;
+    }
+}
+
+@media (max-width:280px) {
+    .navbar { 
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+    }  
+
+    .no-btn-bg{
+        display: none;
+    }
+
+    .blue-btn-bg{
+        display: none;
     }
 }

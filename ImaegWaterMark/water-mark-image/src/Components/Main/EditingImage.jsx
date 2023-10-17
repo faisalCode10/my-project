@@ -1,25 +1,27 @@
-import React, { useState, useRef } from 'react';
+import './init'
+import React, { useState, useRef, useEffect } from 'react';
 import { BiText } from 'react-icons/bi';
 import { AiOutlinePicture } from 'react-icons/ai';
-import ReactQuill from 'react-quill';
 import html2canvas from 'html2canvas';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import Draggable from 'react-draggable';
 import 'react-quill/dist/quill.snow.css';
 import './EditingImage.css';
 import './RightNav.css';
 import UploadImage from './UploadImage';
-import AddText from './AddText';
 
 const EditingImage = () => {
   const encodedImage = localStorage.getItem('selectedImage');
   const [watermarkHTML, setWatermarkHTML] = useState('');
   const [isAddingText, setIsAddingText] = useState(false);
-  const [uploadedImage, setUploadedImage] = useState(null); // State to store the uploaded image
+  const [uploadedImage, setUploadedImage] = useState(null);
   const containerRef = useRef(null);
 
   const addText = () => {
     if (!encodedImage) {
       console.log('No selected image to add text to.');
+
     } else {
       setIsAddingText(true);
     }
@@ -64,39 +66,62 @@ const EditingImage = () => {
     }
   };
 
+
+  useEffect(() => {
+    if (window.location.reload == true) {
+      window.location.href = '/'
+      console.log(error)
+    }
+  }, [window])
+
   return (
     <div className="main">
       <div className="left">
         <div className="quill-container">
-          {isAddingText && (
-            <ReactQuill
-              value={watermarkHTML}
-              onChange={handleEditorChange}
-              className="ReactQuill"
-            />
-          )}
+          {isAddingText ? (
+            <div>
+              <ReactQuill
+                value={watermarkHTML}
+                onChange={handleEditorChange}
+                style={{
+                  position: 'relative',
+                }}
+                className="ql-editor"
+
+              />
+            </div>
+          ) : null}
+
           <div className="image-container" ref={containerRef}>
-           
-              <AddText isAddingText={isAddingText} setWatermarkHTML={setWatermarkHTML} watermarkHTML ={watermarkHTML} />
-           
-           
-              <div className="img">
-                <img
-                  src={encodedImage}
-                  alt=""
-                />
-              </div>
-          <UploadImage  uploadedImage={uploadedImage}/>
+            <Draggable>
+              <div
+                style={{
+                  position: 'absolute',
+                  color: 'white',
+                  width: '70%',
+                  direction: 'ltr',
+                  resize: 'both',
+                  cursor: 'grab',
+                  zIndex: '1',
+                }}
+                dangerouslySetInnerHTML={{ __html: watermarkHTML }}
+              ></div>
+            </Draggable>
+            <div className="img">
+              <img
+                src={encodedImage}
+                alt=""
+              />
+            </div>
+            <UploadImage uploadedImage={uploadedImage} />
           </div>
         </div>
         <div className="para">
           <p>Watermark will be applied to this image</p>
         </div>
-        <Draggable>
-          <div className="small-img">
-            <img src={encodedImage} alt="" />
-          </div>
-        </Draggable>
+        <div className="small-img">
+          <img src={encodedImage} alt="" />
+        </div>
       </div>
 
       <div className="right">
@@ -125,7 +150,7 @@ const EditingImage = () => {
           </div>
           <div className="save-btn">
             <button className="btn-active" onClick={handleSaveText}>
-              <p> Download Watermark Image</p>
+              <p>  Watermark Image</p>
             </button>
           </div>
         </div>

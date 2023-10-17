@@ -1,7 +1,12 @@
+.right{
+  position: fixed;
+  left: 70%;
+  
+}
 .right-nav {
   overflow: hidden;
   padding: 2rem;
-  width: 100%;
+  width: 120%;
   height: 96vh;
   background-color: rgb(240, 248, 255);
 }
@@ -85,10 +90,7 @@ button {
 }
 
 .save-btn {
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-  margin-top: 90%;
+  margin-top:70%;
 }
 
 .btn-active {
@@ -99,17 +101,17 @@ button {
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
   background: #4d90fe;
   color: #fff;
+  cursor: pointer;
 }
 
 .btn-active p {
   font-size: 25px;
 }
 
-
+/* 
 .btn-active::before {
   content: "add an Element";
   display: none;
-  /* Initially hide the content */
   position: absolute;
   border: 1px solid #ccc;
   border-radius: 7px;
@@ -121,7 +123,7 @@ button {
   margin-top: -50px;
   margin-left: 10px;
   z-index: 1;
-}
+} */
 
 .btn-active:hover::before {
   display: block;
