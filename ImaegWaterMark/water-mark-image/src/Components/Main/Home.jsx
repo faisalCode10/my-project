@@ -75,6 +75,7 @@ const Home = () => {
           <span className='spn'>or drop images here</span>
         </div>
       </div>
+      
       <Footer />
     </>
   );

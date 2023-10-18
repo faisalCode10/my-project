@@ -13,7 +13,7 @@
 
 .right-nav h1 {
   border-bottom: 1px solid black;
-  line-height: 4rem;
+  /* line-height: 4rem; */
 }
 
 .buttons {
@@ -31,7 +31,7 @@
   justify-content: flex-start;
   gap: 20px;
   align-items: center;
-  width: 100%;
+  width: 75%;
   height: 50px;
   border-radius: 1rem;
   background-color: transparent;
@@ -42,7 +42,7 @@
 .btn-second {
   display: inline-block;
   position: relative;
-  width: 100%;
+  width: 75%;
   height: 53px;
   border-radius: 1rem;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
@@ -82,7 +82,7 @@ button {
 
 .icon {
   height: 100%;
-  width: 17%;
+  width: 50px;
   color: white;
   background: #4d90fe;
   border-top-left-radius: 1rem;
@@ -129,3 +129,14 @@ button {
   display: block;
 }
 
+
+
+
+
+@media (max-width:830px) {
+      .right{
+        display: none;
+      }
+
+ 
+}

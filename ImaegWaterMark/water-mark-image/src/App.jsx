@@ -12,7 +12,6 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/editing" element={<EditingImage />} />
       </Routes>
-      
     </Router>
   );
 }

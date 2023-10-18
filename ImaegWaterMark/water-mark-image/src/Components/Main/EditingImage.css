@@ -92,3 +92,20 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #888;
   }
+
+
+
+
+  
+@media (max-width:830px) {
+    .left{
+        width: 95%;
+        height: 100%;
+    }
+
+    .right{
+        width: 0;
+    }
+
+
+}
